@@ -1,0 +1,116 @@
+using System;
+using System.Collections.Generic;
+
+namespace ToDoListApp
+{
+    class Program
+    {
+        // Store tasks
+        static List<string> tasks = new List<string>();
+
+        static void Main(string[] args)
+        {
+            bool running = true;
+
+            while (running)
+            {
+                Console.Clear();
+                Console.WriteLine("===== To-Do List App =====");
+                Console.WriteLine("1. View Tasks");
+                Console.WriteLine("2. Add Task");
+                Console.WriteLine("3. Delete Task");
+                Console.WriteLine("4. Exit");
+                Console.Write("Choose an option: ");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        ViewTasks();
+                        break;
+                    case "2":
+                        AddTask();
+                        break;
+                    case "3":
+                        DeleteTask();
+                        break;
+                    case "4":
+                        running = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Press Enter to continue...");
+                        Console.ReadLine();
+                        break;
+                }
+            }
+
+            Console.WriteLine("Thanks for using the To-Do List App!");
+        }
+
+        // View all tasks
+        static void ViewTasks()
+        {
+            Console.Clear();
+            Console.WriteLine("===== Your Tasks =====");
+            if (tasks.Count == 0)
+            {
+                Console.WriteLine("No tasks found.");
+            }
+            else
+            {
+                for (int i = 0; i < tasks.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {tasks[i]}");
+                }
+            }
+            Console.WriteLine("\nPress Enter to return to the menu...");
+            Console.ReadLine();
+        }
+
+        // Add a new task
+        static void AddTask()
+        {
+            Console.Clear();
+            Console.Write("Enter new task: ");
+            string newTask = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newTask))
+            {
+                tasks.Add(newTask);
+                Console.WriteLine("Task added successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Task cannot be empty!");
+            }
+            Console.WriteLine("Press Enter to return to the menu...");
+            Console.ReadLine();
+        }
+
+        // Delete a task
+        static void DeleteTask()
+        {
+            Console.Clear();
+            ViewTasks();
+            Console.Write("Enter the task number to delete: ");
+            if (int.TryParse(Console.ReadLine(), out int index))
+            {
+                if (index > 0 && index <= tasks.Count)
+                {
+                    Console.WriteLine($"Task '{tasks[index - 1]}' deleted.");
+                    tasks.RemoveAt(index - 1);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid task number.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.");
+            }
+            Console.WriteLine("Press Enter to return to the menu...");
+            Console.ReadLine();
+        }
+    }
+}
